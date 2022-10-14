@@ -93,7 +93,7 @@ class ZipCode extends Model
         );
     }
 
-    public function settlementType(): Attribute
+    public function settlementSettlementType(): Attribute
     {
         return Attribute::make(
             get: fn ($value) => ['name' => $value]
