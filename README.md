@@ -8,6 +8,21 @@ Restful service API to consult Zip Codes, technical aspects:
 
 ## Components
 
+### Database
+
+Table name `zip_codes`, field mapped as next:
+- `zip_code` from `d_codigo`    
+- `settlement_name` from `d_asenta`
+- `settlement_type` from `d_tipo_asenta`
+- `municipality_name` from `D_mnpio`
+- `federal_entity_name` from `d_estado`
+- `locality` from `d_ciudad`
+- `federal_entity_key` from `c_estado`     
+- `federal_entity_code` from `c_CP`     
+- `municipality_key` from `c_tipo_asenta`    
+- `settlement_key` from `id_asenta_cpcons` 
+- `settlement_zone_type` from `d_zona`
+
 ### Model
 
 Main model linked to database where previously was uploaded the info from the indicated source.
