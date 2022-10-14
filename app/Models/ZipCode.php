@@ -41,11 +41,10 @@ class ZipCode extends Model
      *
      * @param string $pfx
      * @param $properties
-     * @param bool $toUppercase
      * @param string $separator
      * @return Array
      */
-    public function groupValuesByPrefix(string $pfx, $properties, bool $toUppercase = true, string $separator = '_'): Array
+    public function groupValuesByPrefix(string $pfx, $properties, string $separator = '_'): Array
     {
         // $properties must be an array
         $properties = !is_array($properties)?: Arr::wrap($properties);
@@ -53,7 +52,12 @@ class ZipCode extends Model
         $response = [];
         foreach ($properties as $ndx => $property){
             $val = $this->getAttribute($pfx . $separator . $property);
-            $response[$property] = is_string($val)? strtoupper($val):$val;
+            // strings should be uppercase and remove the accents
+            $response[$property] = !is_string($val)? $val:
+                strtoupper(strtr($val, [
+                    'Á'=>'A', 'É'=>'E', 'Í'=>'I', 'Ñ'=>'N', 'Ó'=>'O', 'Ú'=>'U',
+                    'á'=>'a', 'é'=>'e', 'í'=>'i', 'ñ'=>'n', 'ó'=>'o', 'ú'=>'u'
+                ]));
         }
         return $response;
     }
