@@ -89,7 +89,7 @@ class ZipCode extends Model
     public function settlement(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->groupValuesByPrefix('settlement', ['key', 'name', 'zone_type', 'type'])
+            get: fn ($value) => $this->groupValuesByPrefix('settlement', ['key', 'name', 'zone_type', 'settlement_type'])
         );
     }
 
