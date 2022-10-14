@@ -37,6 +37,17 @@ class ZipCode extends Model
     ];
 
     /**
+     * @param string $string
+     * @return string
+     */
+    public static function formatString(string $string){
+        return strtoupper(strtr($string, [
+            'Á'=>'A', 'É'=>'E', 'Í'=>'I', 'Ñ'=>'N', 'Ó'=>'O', 'Ú'=>'U',
+            'á'=>'a', 'é'=>'e', 'í'=>'i', 'ñ'=>'n', 'ó'=>'o', 'ú'=>'u'
+        ]));
+    }
+
+    /**
      * Group into array the property values which have same prefix name
      *
      * @param string $pfx
@@ -53,11 +64,7 @@ class ZipCode extends Model
         foreach ($properties as $ndx => $property){
             $val = $this->getAttribute($pfx . $separator . $property);
             // strings should be uppercase and remove the accents
-            $response[$property] = !is_string($val)? $val:
-                strtoupper(strtr($val, [
-                    'Á'=>'A', 'É'=>'E', 'Í'=>'I', 'Ñ'=>'N', 'Ó'=>'O', 'Ú'=>'U',
-                    'á'=>'a', 'é'=>'e', 'í'=>'i', 'ñ'=>'n', 'ó'=>'o', 'ú'=>'u'
-                ]));
+            $response[$property] = !is_string($val)? $val: self::formatString($val);
         }
         return $response;
     }
@@ -119,7 +126,7 @@ class ZipCode extends Model
         $first = $zipCodeCollection->first();
         return [
             'zip_code' => $first->zip_code,
-            'locality' => strtoupper($first->locality),
+            'locality' => self::formatString($first->locality),
             'federal_entity' => $first->federal_entity,
             'settlements' => $settlements,
             'municipality' => $first->municipality
